@@ -5,9 +5,28 @@ function ExpenseForm({ onAddExpense }) {
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("Food");
   const [date, setDate] = useState("");
+  const [errors, setErrors] = useState({});
 
   function handleSubmit(e) {
     e.preventDefault(); // stops the page from reloading
+
+    const newErrors = {};
+
+    if (title.trim() === "") {
+      newErrors.title = "Title is required";
+    }
+
+    if (Number(amount) <= 0) {
+      newErrors.amount = "Amount must be greater than 0";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    setErrors({});
+
     onAddExpense({
       id: Date.now(),
       title,
@@ -15,7 +34,17 @@ function ExpenseForm({ onAddExpense }) {
       category,
       date,
     });
+
+    setTitle("");
+    setAmount("");
+    setCategory("Food");
+    setDate("");
+
   }
+
+
+  
+
 
   return (
     <form onSubmit={handleSubmit}>
@@ -25,6 +54,7 @@ function ExpenseForm({ onAddExpense }) {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
+      {errors.title && <p>{errors.title}</p>}
 
       <label>Amount</label>
       <input
@@ -32,6 +62,7 @@ function ExpenseForm({ onAddExpense }) {
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
       />
+      {errors.amount && <p>{errors.amount}</p>}
 
       <label>Category</label>
       <select value={category} onChange={(e) => setCategory(e.target.value)}>
