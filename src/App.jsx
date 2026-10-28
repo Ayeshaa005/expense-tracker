@@ -1,6 +1,6 @@
 import { useState,useEffect } from "react";
 import ExpenseForm from "./Components/ExpenseForm";
-
+import ExpenseItem from "./Components/ExpenseItem";
 function App() {
   const [expenses, setExpenses] = useState(() => {
     const saved = localStorage.getItem("expenses");
@@ -50,12 +50,13 @@ function App() {
       ) : (
         <ul>
           {filteredExpenses.map((expense) => (
-            <li key={expense.id}>
-              {expense.title} - {expense.amount} - {expense.category} -{" "}
-              {expense.date}
-              <button onClick={() => deleteExpense(expense.id)}>Delete</button>
-            </li>
-          ))}
+  <ExpenseItem
+    key={expense.id}
+    expense={expense}
+    onDelete={deleteExpense}
+  />
+))}
+
         </ul>
       )}
 

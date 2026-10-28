@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+
 function ExpenseForm({ onAddExpense }) {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
