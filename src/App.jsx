@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import ExpenseForm from "./Components/ExpenseForm";
 import ExpenseList from "./Components/ExpenseList";
+import ExpenseFilter from "./Components/ExpenseFilter";
+import ExpenseSummary from "./Components/ExpenseSummary";
 
 function App() {
   const [expenses, setExpenses] = useState(() => {
@@ -33,22 +35,14 @@ function App() {
   return (
     <div className="app">
       <h1>Expense Tracker</h1>
-      <h2>Total: {total}</h2>
 
-      <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-        <option>All</option>
-        <option>Food</option>
-        <option>Transport</option>
-        <option>Bills</option>
-        <option>Shopping</option>
-        <option>Other</option>
-      </select>
+      <ExpenseSummary total={total} count={filteredExpenses.length} />
+
+      <ExpenseFilter filter={filter} onFilterChange={setFilter} />
 
       <ExpenseForm onAddExpense={addExpense} />
 
       <ExpenseList expenses={filteredExpenses} onDelete={deleteExpense} />
-
-      <p>Expenses: {filteredExpenses.length}</p>
     </div>
   );
 }
