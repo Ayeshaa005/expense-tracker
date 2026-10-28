@@ -1,6 +1,7 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import ExpenseForm from "./Components/ExpenseForm";
-import ExpenseItem from "./Components/ExpenseItem";
+import ExpenseList from "./Components/ExpenseList";
+
 function App() {
   const [expenses, setExpenses] = useState(() => {
     const saved = localStorage.getItem("expenses");
@@ -9,8 +10,8 @@ function App() {
   const [filter, setFilter] = useState("All");
 
   useEffect(() => {
-  localStorage.setItem("expenses", JSON.stringify(expenses));
-}, [expenses]);
+    localStorage.setItem("expenses", JSON.stringify(expenses));
+  }, [expenses]);
 
   function addExpense(expense) {
     setExpenses([expense, ...expenses]);
@@ -45,20 +46,7 @@ function App() {
 
       <ExpenseForm onAddExpense={addExpense} />
 
-      {filteredExpenses.length === 0 ? (
-        <p>No expenses yet</p>
-      ) : (
-        <ul>
-          {filteredExpenses.map((expense) => (
-  <ExpenseItem
-    key={expense.id}
-    expense={expense}
-    onDelete={deleteExpense}
-  />
-))}
-
-        </ul>
-      )}
+      <ExpenseList expenses={filteredExpenses} onDelete={deleteExpense} />
 
       <p>Expenses: {filteredExpenses.length}</p>
     </div>
