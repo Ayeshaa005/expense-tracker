@@ -40,7 +40,7 @@ h2 {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 .stat {
@@ -73,6 +73,68 @@ h2 {
 
 .stat:first-child p {
   color: rgba(255, 255, 255, 0.8);
+}
+
+.cat-chips {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: thin;
+}
+
+.cat-chip {
+  flex: 1 0 auto;
+  min-width: 132px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid #e8eaf0;
+  border-radius: 12px;
+  padding: 11px 14px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #9ca3af;
+}
+
+.dot-food {
+  background: #22c55e;
+}
+
+.dot-transport {
+  background: #3b82f6;
+}
+
+.dot-bills {
+  background: #f59e0b;
+}
+
+.dot-shopping {
+  background: #ec4899;
+}
+
+.dot-other {
+  background: #9ca3af;
+}
+
+.cat-name {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.cat-sum {
+  margin-left: auto;
+  font-size: 15px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
 }
 
 .layout {
@@ -356,6 +418,11 @@ select {
 
   .stat h3 {
     font-size: 22px;
+  }
+
+  .cat-chip {
+    flex: 0 0 auto;
+    min-width: 128px;
   }
 
   .card {

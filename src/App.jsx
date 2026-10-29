@@ -49,7 +49,11 @@ function App() {
     <div className="app">
       <h1>Expense Tracker</h1>
 
-      <ExpenseSummary total={total} count={filteredExpenses.length} />
+      <ExpenseSummary
+        total={total}
+        count={filteredExpenses.length}
+        expenses={expenses}
+      />
 
       <div className="layout">
         <section className="card">
