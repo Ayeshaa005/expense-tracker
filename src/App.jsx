@@ -10,6 +10,7 @@ function App() {
     return saved ? JSON.parse(saved) : [];
   });
   const [filter, setFilter] = useState("All");
+  const [editingExpense, setEditingExpense] = useState(null);
 
   useEffect(() => {
     localStorage.setItem("expenses", JSON.stringify(expenses));
@@ -19,8 +20,20 @@ function App() {
     setExpenses([expense, ...expenses]);
   }
 
+  function updateExpense(updated) {
+    setExpenses(
+      expenses.map((expense) =>
+        expense.id === updated.id ? updated : expense
+      )
+    );
+    setEditingExpense(null);
+  }
+
   function deleteExpense(id) {
     setExpenses(expenses.filter((expense) => expense.id !== id));
+    if (editingExpense && editingExpense.id === id) {
+      setEditingExpense(null);
+    }
   }
 
   const filteredExpenses = expenses.filter(
@@ -38,11 +51,29 @@ function App() {
 
       <ExpenseSummary total={total} count={filteredExpenses.length} />
 
-      <ExpenseFilter filter={filter} onFilterChange={setFilter} />
+      <div className="layout">
+        <section className="card">
+          <h2>{editingExpense ? "Edit expense" : "Add expense"}</h2>
+          <ExpenseForm
+            onAddExpense={addExpense}
+            onUpdateExpense={updateExpense}
+            editingExpense={editingExpense}
+            onCancelEdit={() => setEditingExpense(null)}
+          />
+        </section>
 
-      <ExpenseForm onAddExpense={addExpense} />
-
-      <ExpenseList expenses={filteredExpenses} onDelete={deleteExpense} />
+        <section className="card">
+          <div className="list-head">
+            <h2>Expenses</h2>
+            <ExpenseFilter filter={filter} onFilterChange={setFilter} />
+          </div>
+          <ExpenseList
+            expenses={filteredExpenses}
+            onDelete={deleteExpense}
+            onEdit={setEditingExpense}
+          />
+        </section>
+      </div>
     </div>
   );
 }
